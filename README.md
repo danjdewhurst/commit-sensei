@@ -1,31 +1,67 @@
+<div align="center">
+
 # commit-sensei
 
-`commit-sensei` is an offline Node.js CLI that generates deterministic conventional commit messages from your git diff.
+Offline, deterministic Conventional Commit message generation from your Git diffs.
+
+[![Node.js](https://img.shields.io/badge/node-%3E%3D18-339933?logo=nodedotjs&logoColor=white)](#requirements)
+[![Bun](https://img.shields.io/badge/bun-%3E%3D1.0.0-000000?logo=bun&logoColor=white)](#requirements)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+
+</div>
+
+---
+
+## Why `commit-sensei`?
+
+Writing consistent commit messages is annoying friction, especially when context-switching.
+`commit-sensei` removes that friction with fast, offline, deterministic heuristics.
+
+- ✅ No API calls
+- ✅ No network dependency
+- ✅ Uses staged changes first
+- ✅ Falls back to working tree suggestions
+- ✅ Conventional Commit friendly (`feat`, `fix`, `docs`, `test`, `ci`, `chore`, etc.)
+
+---
 
 ## Features
 
-- Uses **staged diff** first, falls back to working-tree diff.
-- Applies deterministic heuristics (no API calls).
-- Supports conventional commit overrides: `--type`, `--scope`.
-- Can run in suggestion mode with `--dry-run`.
+- Reads your Git diff and generates a Conventional Commit header.
+- Supports overrides:
+  - `--type <type>`
+  - `--scope <scope>`
+- Supports suggestion mode:
+  - `--dry-run`
+- Commits automatically when staged changes exist (unless `--dry-run` is set).
+- Works with both Node.js and Bun.
 
-## Install / Run
+---
 
-### Local project usage (npm)
+## Requirements
+
+- Node.js `>=18` **or** Bun `>=1.0.0`
+- Git repository
+
+---
+
+## Installation & Usage
+
+### npm (local project)
 
 ```bash
 npm install
 npm run sensei -- --dry-run
 ```
 
-### Local project usage (Bun)
+### Bun (local project)
 
 ```bash
 bun install
 bun run sensei:bun:dry
 ```
 
-### As a CLI binary
+### Link as global CLI
 
 ```bash
 npm link
@@ -38,45 +74,62 @@ commit-sensei --help
 bunx commit-sensei --help
 ```
 
-## Usage
+---
+
+## CLI
 
 ```bash
 commit-sensei [options]
 ```
 
-Options:
+### Options
 
-- `--help` show usage.
-- `--type <type>` override inferred commit type.
-- `--scope <scope>` override inferred scope.
-- `--dry-run` print message only; do not commit.
+- `--help` – show help text
+- `--type <type>` – override inferred Conventional Commit type
+- `--scope <scope>` – override inferred scope
+- `--dry-run` – print suggested message only (no commit)
+
+---
 
 ## Examples
 
 ```bash
-# Generate from staged changes and commit automatically
+# Auto-commit from staged changes
 commit-sensei
 
-# Suggest message only
+# Suggest only
 commit-sensei --dry-run
 
 # Force type and scope
 commit-sensei --type fix --scope parser --dry-run
 ```
 
-## Heuristics (deterministic)
+---
 
-- docs-only changes => `docs`
-- test-only changes => `test`
-- CI-only changes => `ci`
-- build/config-only changes => `chore`
-- fix-like keywords in diff => `fix`
-- large net additions => `feat`
-- small changes => `refactor`
-- fallback => `chore`
+## How inference works (deterministic)
+
+`commit-sensei` applies simple, transparent rules:
+
+- docs-only changes → `docs`
+- test-only changes → `test`
+- CI-only changes → `ci`
+- build/config-only changes → `chore`
+- fix-like keywords in diff → `fix`
+- large net additions → `feat`
+- small/tight changes → `refactor`
+- fallback → `chore`
+
+---
 
 ## Development
 
 ```bash
 npm test
+bun test
 ```
+
+---
+
+## License
+
+MIT © Daniel Dewhurst
