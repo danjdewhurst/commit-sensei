@@ -1,0 +1,20 @@
+{
+  "name": "commit-sensei",
+  "version": "1.0.0",
+  "description": "Offline deterministic conventional commit message generator",
+  "type": "commonjs",
+  "bin": {
+    "commit-sensei": "bin/commit-sensei.js"
+  },
+  "scripts": {
+    "test": "node --test",
+    "sensei": "node ./bin/commit-sensei.js",
+    "sensei:dry": "node ./bin/commit-sensei.js --dry-run"
+  },
+  "keywords": [
+    "git",
+    "cli",
+    "conventional-commits"
+  ],
+  "license": "MIT"
+}
