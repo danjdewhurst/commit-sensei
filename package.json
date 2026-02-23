@@ -8,8 +8,15 @@
   },
   "scripts": {
     "test": "node --test",
+    "test:bun": "bun test",
     "sensei": "node ./bin/commit-sensei.js",
-    "sensei:dry": "node ./bin/commit-sensei.js --dry-run"
+    "sensei:dry": "node ./bin/commit-sensei.js --dry-run",
+    "sensei:bun": "bun run ./bin/commit-sensei.js",
+    "sensei:bun:dry": "bun run ./bin/commit-sensei.js --dry-run"
+  },
+  "engines": {
+    "node": ">=18",
+    "bun": ">=1.0.0"
   },
   "keywords": [
     "git",

@@ -11,11 +11,18 @@
 
 ## Install / Run
 
-### Local project usage
+### Local project usage (npm)
 
 ```bash
 npm install
 npm run sensei -- --dry-run
+```
+
+### Local project usage (Bun)
+
+```bash
+bun install
+bun run sensei:bun:dry
 ```
 
 ### As a CLI binary
@@ -23,6 +30,12 @@ npm run sensei -- --dry-run
 ```bash
 npm link
 commit-sensei --help
+```
+
+### One-off via bunx
+
+```bash
+bunx commit-sensei --help
 ```
 
 ## Usage
