@@ -61,38 +61,48 @@ function parseArgs(argv) {
   return options;
 }
 
-function run(argv = process.argv.slice(2)) {
-  const options = parseArgs(argv);
+function createRunner(deps = {}) {
+  const getDiffFn = deps.getDiff || getDiff;
+  const generateMessageFn = deps.generateMessage || generateMessage;
+  const commitWithMessageFn = deps.commitWithMessage || commitWithMessage;
+  const write = deps.write || ((text) => process.stdout.write(text));
 
-  if (options.help) {
-    printHelp();
-    return 0;
-  }
+  return function run(argv = process.argv.slice(2)) {
+    const options = parseArgs(argv);
 
-  const diff = getDiff();
-  if (!diff.text.trim()) {
-    throw new Error('No git changes found (staged or working tree).');
-  }
-
-  const message = generateMessage(diff.text, {
-    type: options.type,
-    scope: options.scope
-  });
-
-  if (options.dryRun || diff.source !== 'staged') {
-    process.stdout.write(`${message}\n`);
-    if (diff.source === 'working' && !options.dryRun) {
-      process.stdout.write('Note: no staged changes found. Suggested message only.\n');
+    if (options.help) {
+      printHelp();
+      return 0;
     }
-    return 0;
-  }
 
-  const commitOutput = commitWithMessage(message);
-  process.stdout.write(commitOutput);
-  return 0;
+    const diff = getDiffFn();
+    if (!diff.text.trim()) {
+      throw new Error('No git changes found (staged or working tree).');
+    }
+
+    const message = generateMessageFn(diff.text, {
+      type: options.type,
+      scope: options.scope
+    });
+
+    if (options.dryRun || diff.source !== 'staged') {
+      write(`${message}\n`);
+      if (diff.source === 'working' && !options.dryRun) {
+        write('Note: no staged changes found. Suggested message only.\n');
+      }
+      return 0;
+    }
+
+    const commitOutput = commitWithMessageFn(message);
+    write(commitOutput);
+    return 0;
+  };
 }
 
+const run = createRunner();
+
 module.exports = {
+  createRunner,
   parseArgs,
   printHelp,
   run
