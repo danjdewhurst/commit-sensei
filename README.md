@@ -6,6 +6,7 @@ Offline, deterministic Conventional Commit message generation from your Git diff
 
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18-339933?logo=nodedotjs&logoColor=white)](#requirements)
 [![Bun](https://img.shields.io/badge/bun-%3E%3D1.0.0-000000?logo=bun&logoColor=white)](#requirements)
+[![Tests](https://github.com/danjdewhurst/commit-sensei/actions/workflows/tests.yml/badge.svg)](https://github.com/danjdewhurst/commit-sensei/actions/workflows/tests.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
 </div>
